@@ -1,12 +1,14 @@
 package com.example.mrust.json_231214;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +24,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
+
+    static JSONObject jsonobject = null;
+    static JSONArray jsonarray = null;
+    ArrayList<HashMap<String, String>> arraylist;
+    ListView listview;
+
+    ProgressDialog mProgressDialog;
+
     static EditText etResponse;
     TextView tvIsConnected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +61,8 @@ public class MainActivity extends Activity {
         // call AsynTask to perform network operation on separate thread
         //new HttpAsyncTask().execute("http://hmkcode.appspot.com/rest/controller/get.json");
         //new HttpAsyncTask().execute("http://api.openweathermap.org/data/2.5/weather?q=Londra");
-        new HttpAsyncTask().execute("https://api.dakick.com/api/v1/events?page=1&per_page=1");
-
+       new HttpAsyncTask().execute("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+        //new HttpAsyncTask().execute();
     }
 
     public static String GET(String url){
@@ -68,7 +81,7 @@ public class MainActivity extends Activity {
 
             // convert inputstream to string
             if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
+                result = convertInputStreamToString_mrust(inputStream);
             else
                 result = "Did not work!";
 
@@ -90,12 +103,14 @@ public class MainActivity extends Activity {
 
         JSONObject json = new JSONObject(result);
         //JSONArray jarray = json.getJSONArray("events");
-        //result = jarray.getJSONObject(1);
-        //etResponse.setText(json.toString());
-        //result = jarray.toString();
-        //results = json.getString("events");
-        // events Array
+        //result = String.valueOf(jarray.getJSONObject(1));
+        /*
+        etResponse.setText(json.toString());
+        result = jarray.toString();
+        results = json.getString("events");
+        events Array*/
         JSONArray articles = json.getJSONArray("events");
+        //result = String.valueOf(articles);
         /*result = articles.getJSONObject(0).getString("id") +"  ";
         result += articles.getJSONObject(0).getString("slug") +"  ";
         result += articles.getJSONObject(0).getString("slug")+"  ";
@@ -104,8 +119,15 @@ public class MainActivity extends Activity {
         result += articles.getJSONObject(0).getString("start_date_time")+"  ";
         result += articles.getJSONObject(0).getString("end_date_time")+"  \n";
         */
+
+       result = articles.getJSONObject(0).getString("location_or_broadcast_parsable_type");
+         result = String.valueOf(articles.getJSONArray(5));
+
         //JSONObject articles_geo = json.getJSONObject("location_or_broadcast_geo");
-        result = articles.getString(0);
+
+        // [TODO]  location or broadcast geo icindeki verileri ulasmaya calisiyor
+       // result = articles.getString(0);
+
         //result = String.valueOf(json.getJSONObject("location_or_broadcast_geo"));
         //result = String.valueOf((articles_geo.getLong("latitude")));
         //result = articles_geo.getJSONObject(0).getString("latitude")+"   ";
@@ -116,6 +138,108 @@ public class MainActivity extends Activity {
         return result;
 
     }
+
+
+    // mrust_26_12_14
+    private static String convertInputStreamToString_mrust(InputStream inputStream) throws IOException, JSONException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+
+        String line = "";
+        String result = null;
+/*
+        String result = "";
+        try {
+            while((line = bufferedReader.readLine()) != null)
+               result_q += line ;
+
+        } finally {
+            inputStream.close();
+        }
+*/
+
+        String events = null;
+       jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+       if (jsonobject != null)
+            result= String.valueOf(jsonobject);
+
+        jsonarray = jsonobject.getJSONArray("events");
+        String name = null;
+        for (int i = 0; i <jsonarray.length() ; i++) {
+            JSONObject jo = jsonarray.getJSONObject(i);
+
+            name = jo.getString("root_meta_name");
+            JSONObject ja = jo.getJSONObject("location_or_broadcast_geo");
+            if (ja != null) {
+                    String jalat=ja.getString("latitude");
+                    String jalong = ja.getString("longitude");
+             /*
+             JSONObject jalong = ja.getJSONObject("longitude");
+             JSONObject jalat = ja.getJSONObject("latitude");
+             */
+             //   JSONObject jalat = ja.getJSONObject(0);
+
+               // JSONObject jalong = ja.getJSONObject(1);
+           events = String.valueOf(jalat)+ "  " +String.valueOf(jalong);
+
+            }
+
+
+        }
+        if (events != null)
+            result = events;
+        else
+            result = name ;
+
+
+      //  result = String.valueOf(articles_1);
+        //    JSONObject json_event = new JSONObject(result);
+        //JSONArray jarray = json.getJSONArray("events");
+        //result = jarray.getJSONObject(1);
+        //etResponse.setText(json.toString());
+        //result = jarray.toString();
+        //results = json.getString("events");
+        // events Array
+
+//        result = String.valueOf(json_event);
+
+        // arraye cevirirken bir bok oluyor buna
+        //- JSONArray json = json_event.getJSONArray("events");
+        //- result = String.valueOf(json);
+
+        //JSONArray articles = result.getJSONArray("events");
+        /*result = articles.getJSONObject(0).getString("id") +"  ";
+        result += articles.getJSONObject(0).getString("slug") +"  ";
+        result += articles.getJSONObject(0).getString("slug")+"  ";
+        result += articles.getJSONObject(0).getString("name")+ "  ";
+        result += articles.getJSONObject(0).getString("description")+ "  ";
+        result += articles.getJSONObject(0).getString("start_date_time")+"  ";
+        result += articles.getJSONObject(0).getString("end_date_time")+"  \n";
+        */
+
+
+        //result = String.valueOf(json_event);
+        // result = String.valueOf(json_event.getJSONArray("location_or_broadcast_geo"));
+        // result = articles.getJSONArray("location_or_broadcast_geo");
+
+        //JSONObject articles_geo = json.getJSONObject("location_or_broadcast_geo");
+
+        // [TODO]  location or broadcast geo icindeki verileri ulasmaya calisiyor
+        // result = articles.getString(0);
+
+        //result = String.valueOf(json.getJSONObject("location_or_broadcast_geo"));
+        //result = String.valueOf((articles_geo.getLong("latitude")));
+        //result = articles_geo.getJSONObject(0).getString("latitude")+"   ";
+        //result += articles_geo.getJSONObject(0).getString("longitude")+"   ";
+
+
+
+        return result;
+
+    }
+
+
+
+    //
 
     // network connected check option
     public boolean isConnected(){
@@ -132,6 +256,7 @@ public class MainActivity extends Activity {
         protected String doInBackground(String... urls) {
 
             return GET(urls[0]);
+
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
