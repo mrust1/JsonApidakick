@@ -27,6 +27,9 @@ public class MainActivity extends Activity {
     static EditText etResponse;
     TextView tvIsConnected;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
