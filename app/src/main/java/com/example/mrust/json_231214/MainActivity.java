@@ -10,6 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,11 +28,10 @@ public class MainActivity extends Activity {
 
     static JSONObject jsonobject = null;
     static JSONArray jsonarray = null;
+
+
     static EditText etResponse;
     TextView tvIsConnected;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +50,25 @@ public class MainActivity extends Activity {
         else{
             tvIsConnected.setText("You are NOT conncted");
         }
-       new HttpAsyncTask().execute("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+
+        new HttpAsyncTask().execute("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+
     }
 
     public static String GET(String url){
         InputStream inputStream = null;
         String result = "";
         try {
+
+            // create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // make GET request to the given URL
+            HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+
+            // receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
             // convert inputstream to string
             if(inputStream != null)
                 result = convertInputStreamToString_mrust(inputStream);
@@ -95,13 +110,13 @@ public class MainActivity extends Activity {
         result += articles.getJSONObject(0).getString("end_date_time")+"  \n";
         */
 
-       result = articles.getJSONObject(0).getString("location_or_broadcast_parsable_type");
-         result = String.valueOf(articles.getJSONArray(5));
+        result = articles.getJSONObject(0).getString("location_or_broadcast_parsable_type");
+        result = String.valueOf(articles.getJSONArray(5));
 
         //JSONObject articles_geo = json.getJSONObject("location_or_broadcast_geo");
 
         // [TODO]  location or broadcast geo icindeki verileri ulasmaya calisiyor
-       // result = articles.getString(0);
+        // result = articles.getString(0);
 
         //result = String.valueOf(json.getJSONObject("location_or_broadcast_geo"));
         //result = String.valueOf((articles_geo.getLong("latitude")));
@@ -115,38 +130,36 @@ public class MainActivity extends Activity {
     }
 
 
-    /*
-    mrust_26_12_14
-    converto Input Stream To String.
-    Converto Input Strem to Json
-    */
+    // mrust_26_12_14
     private static String convertInputStreamToString_mrust(InputStream inputStream) throws IOException, JSONException {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String result = null;
         String events = null;
-       jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+        jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+        if (jsonobject != null)
+            result= String.valueOf(jsonobject);
 
         jsonarray = jsonobject.getJSONArray("events");
         String name = null;
         for (int i = 0; i <jsonarray.length() ; i++) {
-            JSONObject jo_for_inside = jsonarray.getJSONObject(i);
+            JSONObject jo = jsonarray.getJSONObject(i);
 
-            name = jo_for_inside.getString("root_meta_name");
-            JSONObject ja_for_lat_and_long = jo_for_inside.getJSONObject("location_or_broadcast_geo");
-            if (ja_for_lat_and_long != null) {
-                events = String.valueOf(ja_for_lat_and_long.getString("latitude"))+ "  " +String.valueOf(ja_for_lat_and_long.getString("longitude"));
+            name = jo.getString("root_meta_name");
+            JSONObject ja = jo.getJSONObject("location_or_broadcast_geo");
+            if (ja != null) {
+                events = String.valueOf(ja.getString("latitude"))+ "  " +String.valueOf(ja.getString("longitude"));
             }
+
+
         }
-        if (events != null)
-            result = events;
-        else
-            result = name ;
+        result = (result != null) ? events : name;
         return result;
 
     }
+
+
+
     //
-
-
 
     // network connected check option
     public boolean isConnected(){
@@ -162,7 +175,7 @@ public class MainActivity extends Activity {
         @Override
         protected String doInBackground(String... urls) {
 
-           return GET(urls[0]);
+            return GET(urls[0]);
 
         }
         // onPostExecute displays the results of the AsyncTask.
