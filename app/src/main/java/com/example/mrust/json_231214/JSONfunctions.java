@@ -20,6 +20,7 @@ public class JSONfunctions {
         String result = "";
         JSONObject jArray = null;
 
+
         // Download JSON data from URL
         try{
             HttpClient httpclient = new DefaultHttpClient();
