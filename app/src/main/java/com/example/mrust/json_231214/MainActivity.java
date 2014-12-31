@@ -152,7 +152,9 @@ public class MainActivity extends Activity {
 
 
         }
+
         result = (result != null) ? events : name;
+        result += "  -- " + jsonobject.length();
         return result;
 
     }
