@@ -24,6 +24,9 @@ public class Event {
     protected static String images_poster = null;
     protected static String images_android = null;
 
+    // next variable
+    Event next;
+
     public static String getStart_datetime() {
         return start_datetime;
     }

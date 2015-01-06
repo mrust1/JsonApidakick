@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // get reference to the views
+        // get reference to the viewsctkya@
         etResponse = (EditText) findViewById(R.id.etResponse);
         tvIsConnected = (TextView) findViewById(R.id.tvIsConnected);
 
@@ -132,24 +132,27 @@ public class MainActivity extends Activity {
 
     // mrust_26_12_14
     private static String convertInputStreamToString_mrust(InputStream inputStream) throws IOException, JSONException {
+
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String result = null;
         String events = null;
-        jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+        jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=2");
         if (jsonobject != null)
             result= String.valueOf(jsonobject);
 
         jsonarray = jsonobject.getJSONArray("events");
+
+        //Event event = new Event(jsonarray.length());
         String name = null;
+
         for (int i = 0; i <jsonarray.length() ; i++) {
             JSONObject jo = jsonarray.getJSONObject(i);
 
-            name = jo.getString("root_meta_name");
+            name += jo.getString("root_meta_name");
             JSONObject ja = jo.getJSONObject("location_or_broadcast_geo");
             if (ja != null) {
-                events = String.valueOf(ja.getString("latitude"))+ "  " +String.valueOf(ja.getString("longitude"));
+                events += String.valueOf(ja.getString("latitude"))+ "  " +String.valueOf(ja.getString("longitude"))+ "      ";
             }
-
 
         }
 
