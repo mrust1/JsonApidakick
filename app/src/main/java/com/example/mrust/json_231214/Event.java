@@ -17,8 +17,8 @@ public class Event {
     protected static String end_datetime = null;
     protected static String time_zone = null;
     protected static String ticket_url = null;
-    protected static Long latitude ;
-    protected static Long longtitude ;
+    protected static String latitude ;
+    protected static String longtitude ;
     protected static String images_medium = null;
     protected static String images_square = null;
     protected static String images_poster = null;
@@ -26,6 +26,7 @@ public class Event {
 
     // next variable
     Event next;
+
 
     public static String getStart_datetime() {
         return start_datetime;
@@ -123,19 +124,19 @@ public class Event {
         Event.ticket_url = ticket_url;
     }
 
-    public static Long getLatitude() {
+    public static String getLatitude() {
         return latitude;
     }
 
-    public static void setLatitude(Long latitude) {
+    public static void setLatitude(String latitude) {
         Event.latitude = latitude;
     }
 
-    public static Long getLongtitude() {
+    public static String getLongtitude() {
         return longtitude;
     }
 
-    public static void setLongtitude(Long longtitude) {
+    public static void setLongtitude(String longtitude) {
         Event.longtitude = longtitude;
     }
 

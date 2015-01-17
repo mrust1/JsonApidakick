@@ -24,15 +24,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class MainActivity extends Activity {
-
-
     static JSONObject jsonobject = null;
     static JSONArray jsonarray = null;
-
-
     static EditText etResponse;
     TextView tvIsConnected;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +46,8 @@ public class MainActivity extends Activity {
             tvIsConnected.setText("You are NOT conncted");
         }
 
-        new HttpAsyncTask().execute("https://api.dakick.com/api/v1/events?page=1&per_page=1");
-
+        //new HttpAsyncTask().execute("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+        new HttpAsyncTask().execute();
     }
 
     public static String GET(String url){
@@ -132,32 +127,45 @@ public class MainActivity extends Activity {
 
     // mrust_26_12_14
     private static String convertInputStreamToString_mrust(InputStream inputStream) throws IOException, JSONException {
-
+       List liste = new List();
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String result = null;
         String events = null;
-        jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=2");
+        jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=1");
         if (jsonobject != null)
             result= String.valueOf(jsonobject);
 
         jsonarray = jsonobject.getJSONArray("events");
 
-        //Event event = new Event(jsonarray.length());
+       // Event event = new Event(jsonarray.length());
         String name = null;
-
+        String k= null;
+         Event event = new Event();
         for (int i = 0; i <jsonarray.length() ; i++) {
+          // Event event = new Event();
             JSONObject jo = jsonarray.getJSONObject(i);
 
             name += jo.getString("root_meta_name");
+
+           event.setRoot_meta_name(jo.getString("root_meta_name"));
+            event.setName(jo.getString("name"));
+            event.setStart_datetime(jo.getString("start_datetime"));
+            event.setEnd_datetime(jo.getString("end_datetime"));
             JSONObject ja = jo.getJSONObject("location_or_broadcast_geo");
+            event.setLongtitude(ja.getString("latitude"));
+            event.setLatitude(ja.getString("longitude"));
             if (ja != null) {
-                events += String.valueOf(ja.getString("latitude"))+ "  " +String.valueOf(ja.getString("longitude"))+ "      ";
+                // kordinatları alıyor longtitude, latitude
+                events = String.valueOf(ja.getString("latitude"))+ "  " +String.valueOf(ja.getString("longitude"))+ "      ";
+                //event.setLongtitude(Long.valueOf(ja.getString("latitude")));
+                //event.setLatitude(Long.valueOf(ja.getString("longitude")));
             }
 
+       liste.add(event);
         }
 
+         // sonuc ile ilgili bilgilendirme ve null deger sorgulama
         result = (result != null) ? events : name;
-        result += "  -- " + jsonobject.length();
         return result;
 
     }
@@ -176,9 +184,13 @@ public class MainActivity extends Activity {
             return false;
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private static class Liste {
+    }
+
+    private class HttpAsyncTask extends AsyncTask<void, Void, void> {
         @Override
-        protected String doInBackground(String... urls) {
+        protected Void doInBackground(Void... params){
+       // protected String doInBackground(String... urls) {
 
             return GET(urls[0]);
 

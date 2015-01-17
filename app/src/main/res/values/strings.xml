@@ -4,5 +4,14 @@
     <string name="app_name">json_231214</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="name" >Name</string>
+    <string name="ticket_url">Ticket Url</string>
+    <string name="start_datetime">Start Date Time</string>
+    <string name="end_datetime">End Date Time</string>
+    <string name="phone">Phone</string>
+    <string name="locations_latitude">Latitude</string>
+    <string name="locations_longtitude">Longtitude</string>
+    <string name="images_medum">images</string>
+    <string name="images_android">images Android</string>
 
 </resources>

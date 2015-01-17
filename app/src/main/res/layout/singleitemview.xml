@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/name_label" />
+
+
+    <TextView
+        android:id="@+id/start_datetime_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_label"
+        android:text="@string/start_datetime" />
+
+    <TextView
+        android:id="@+id/start_datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_toRightOf="@+id/start_datetime_label" />
+
+
+
+    <TextView
+        android:id="@+id/end_datetime_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_datetime_label"
+        android:text="@string/end_datetime" />
+
+    <TextView
+        android:id="@+id/end_datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_datetime"
+        android:layout_toRightOf="@+id/end_datetime_label" />
+
+
+    <TextView
+        android:id="@+id/phone_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_datetime_label"
+        android:text="@string/phone" />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_datetime"
+        android:layout_toRightOf="@+id/phone_label" />
+
+
+    <TextView
+        android:id="@+id/ticket_url_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phone_label"
+        android:text="@string/ticket_url" />
+
+    <TextView
+        android:id="@+id/ticket_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phone"
+        android:layout_toRightOf="@+id/ticket_url_label" />
+
+
+    <TextView
+        android:id="@+id/locations_latitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ticket_url_label"
+        android:text="@string/locations_latitude" />
+
+    <TextView
+        android:id="@+id/locations_latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ticket_url"
+        android:layout_toRightOf="@+id/locations_latitude_label" />
+
+    <TextView
+        android:id="@+id/locations_longtitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/locations_latitude_label"
+        android:text="@string/locations_longtitude" />
+
+    <TextView
+        android:id="@+id/locations_longtitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/locations_latitude_label"
+        android:layout_toRightOf="@+id/locations_longtitude_label" />
+
+    <ImageView
+        android:id="@+id/images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="#000000"
+        android:padding="1dp"
+        />
+
+</RelativeLayout>
