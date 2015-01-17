@@ -10,8 +10,8 @@
     <string name="end_datetime">End Date Time</string>
     <string name="phone">Phone</string>
     <string name="locations_latitude">Latitude</string>
-    <string name="locations_longtitude">Longtitude</string>
-    <string name="images_medum">images</string>
+    <string name="locations_longitude">Longitude</string>
+    <string name="images_medium">images</string>
     <string name="images_android">images Android</string>
 
 </resources>

@@ -93,18 +93,18 @@
         android:layout_toRightOf="@+id/locations_latitude_label" />
 
     <TextView
-        android:id="@+id/locations_longtitude_label"
+        android:id="@+id/locations_longitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/locations_latitude_label"
-        android:text="@string/locations_longtitude" />
+        android:text="@string/locations_longitude" />
 
     <TextView
-        android:id="@+id/locations_longtitude"
+        android:id="@+id/locations_longitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/locations_latitude_label"
-        android:layout_toRightOf="@+id/locations_longtitude_label" />
+        android:layout_toRightOf="@+id/locations_longitude_label" />
 
     <ImageView
         android:id="@+id/images"
