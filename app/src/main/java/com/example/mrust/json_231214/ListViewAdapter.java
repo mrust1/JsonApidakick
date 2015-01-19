@@ -6,6 +6,7 @@ package com.example.mrust.json_231214;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class ListViewAdapter extends BaseAdapter {
         TextView longitude;
         ImageView medium;
         ImageView android;
-
+        Bitmap bitmap;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,7 +78,7 @@ public class ListViewAdapter extends BaseAdapter {
         medium = (ImageView) itemView.findViewById(R.id.images);
         longitude = (TextView) itemView.findViewById(R.id.locations_longitude);
         latitude = (TextView) itemView.findViewById(R.id.locations_latitude);
-        android = (ImageView) itemView.findViewById(R.id.images);
+       // android = (ImageView) itemView.findViewById(R.id.images);
 
         // Capture position and set results to the TextViews
 
@@ -92,6 +93,7 @@ public class ListViewAdapter extends BaseAdapter {
         // Passes flag images URL into ImageLoader.class to download and cache
         // images
         imageLoader.DisplayImage(resultp.get(MainActivity.MEDIUM), medium);
+        //medium.setImageBitmap(imageLoader.getBitmap(String.valueOf(medium))) ;
 
         // Capture button clicks on ListView items
         itemView.setOnClickListener(new View.OnClickListener() {

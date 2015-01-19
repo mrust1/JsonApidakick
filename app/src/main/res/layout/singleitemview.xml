@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    >
 
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\n" />
 
     <TextView
         android:id="@+id/name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/empty"
+        android:textColor="@color/abc_search_url_text_normal"
         android:text="@string/name" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#480CEE"
+        android:layout_below="@+id/empty"
         android:layout_toRightOf="@+id/name_label" />
 
 
@@ -22,6 +32,7 @@
         android:id="@+id/start_datetime_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/abc_search_url_text_normal"
         android:layout_below="@+id/name_label"
         android:text="@string/start_datetime" />
 
@@ -30,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
+        android:textColor="#480CEE"
         android:layout_toRightOf="@+id/start_datetime_label" />
 
 
@@ -39,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/start_datetime_label"
+        android:textColor="@color/abc_search_url_text_normal"
         android:text="@string/end_datetime" />
 
     <TextView
@@ -46,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/start_datetime"
+        android:textColor="#480CEE"
         android:layout_toRightOf="@+id/end_datetime_label" />
 
 
@@ -54,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/end_datetime_label"
+        android:textColor="@color/abc_search_url_text_normal"
         android:text="@string/phone" />
 
     <TextView
@@ -61,42 +76,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/end_datetime"
+        android:textColor="#480CEE"
         android:layout_toRightOf="@+id/phone_label" />
 
 
-    <TextView
-        android:id="@+id/ticket_url_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/phone_label"
-        android:text="@string/ticket_url" />
-
-    <TextView
-        android:id="@+id/ticket_url"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/phone"
-        android:layout_toRightOf="@+id/ticket_url_label" />
 
 
     <TextView
         android:id="@+id/locations_latitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ticket_url_label"
+        android:layout_below="@+id/phone_label"
+        android:textColor="@color/abc_search_url_text_normal"
         android:text="@string/locations_latitude" />
 
     <TextView
         android:id="@+id/locations_latitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ticket_url"
+        android:layout_below="@+id/phone"
+        android:textColor="#480CEE"
         android:layout_toRightOf="@+id/locations_latitude_label" />
 
     <TextView
         android:id="@+id/locations_longitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/abc_search_url_text_normal"
         android:layout_below="@+id/locations_latitude_label"
         android:text="@string/locations_longitude" />
 
@@ -105,15 +111,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/locations_latitude_label"
+        android:textColor="#480CEE"
         android:layout_toRightOf="@+id/locations_longitude_label" />
+
+
+
+    <TextView
+        android:id="@+id/ticket_url_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/locations_longitude_label"
+        android:textColor="@color/abc_search_url_text_normal"
+        android:text="@string/ticket_url" />
+
+    <TextView
+        android:id="@+id/ticket_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/locations_longitude"
+        android:textColor="#480CEE"
+        android:layout_toRightOf="@+id/ticket_url_label" />
+
+
+    <TextView
+        android:id="@+id/empty_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ticket_url"
+        android:text="\n" />
+
 
     <ImageView
         android:id="@+id/images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="#000000"
-        android:padding="1dp"
-        />
 
+        android:layout_below="@+id/empty_end"
+        android:background="#000000"
+        android:padding="1dp" />
 </RelativeLayout>

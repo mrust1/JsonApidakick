@@ -1,9 +1,6 @@
 package com.example.mrust.json_231214;
 
-/**
- * Created by mrust on 17.01.2015.
- */
-import android.content.Context;
+      import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -57,7 +54,7 @@ public class ImageLoader {
         executorService.submit(new PhotosLoader(p));
     }
 
-    private Bitmap getBitmap(String url) {
+    public Bitmap getBitmap(String url) {
         File f = fileCache.getFile(url);
 
         Bitmap b = decodeFile(f);

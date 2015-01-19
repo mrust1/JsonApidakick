@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
     static String LATITUDE = "latitude";
     static String LONGITUDE = "longitude";
     static String MEDIUM = "medium";
-    static String ANDROID = "android";
+    static String IPHONE2 = "iphone2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,9 @@ public class MainActivity extends Activity {
         // check if you are connected or not
         if (isConnected()) {
             tvIsConnected.setBackgroundColor(0xFF00CC00);
-            tvIsConnected.setText("You are connected");
+            tvIsConnected.setText("Online Muzik Sanat");
         } else {
-            tvIsConnected.setText("You are NOT connected");
+            tvIsConnected.setText("Please check network connection");
         }
 
         new HttpAsyncTask().execute();
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
     }
 
 
-    private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
+    private class HttpAsyncTask extends AsyncTask<Void, Void, String> implements com.example.mrust.json_231214.HttpAsyncTask {
 
 
         @Override
@@ -82,7 +82,7 @@ public class MainActivity extends Activity {
             mProgressDialog.setTitle("Muzik Sanat Tutorial");
             // Set progressdialog message
             mProgressDialog.setMessage("Loading...");
-            //mProgressDialog.setIndeterminate(false);
+            mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
         }
@@ -91,18 +91,18 @@ public class MainActivity extends Activity {
         @Override
         protected String doInBackground(Void... params) {
             arraylist = new ArrayList<HashMap<String, String>>();
-            jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=1");
+            jsonobject = JSONfunctions.getJSONfromURL("https://api.dakick.com/api/v1/events?page=1&per_page=10");
 
             try {
                 jsonarray = jsonobject.getJSONArray("events");
                 //
                 // New Model
                 for (int i = 0; i < jsonarray.length(); i++) {
-                    HashMap<String, String> map = new HashMap<String, String>();
+                    HashMap<String, String> map = new HashMap<>();
                     jsonobject= jsonarray.getJSONObject(i);
                     //
                     // New Model
-                    map.put("name", jsonobject.getString("root_meta_name"));
+                    map.put("name", jsonobject.getString("name"));
                     map.put("ticket_url", jsonobject.getString("ticket_url"));
                     map.put("start_datetime", jsonobject.getString("start_datetime"));
                     map.put("end_datetime", jsonobject.getString("end_datetime"));
@@ -115,8 +115,10 @@ public class MainActivity extends Activity {
                         map.put("longitude", ja.getString("longitude"));
                     }
                     JSONObject jo_images = jsonobject.getJSONObject("images");
-                    jo_images = jo_images.getJSONObject("medium");
-                    map.put("medium", jo_images.getString("path"));
+                    JSONObject jo_images_1 = jo_images.getJSONObject("medium");
+                    map.put("medium", jo_images_1.getString("path").substring(0,jo_images_1.getString("path").length()-11));
+                    jo_images_1 = jo_images.getJSONObject("iphone2");
+                    map.put("iphone", jo_images_1.getString("path").substring(0,jo_images_1.getString("path").length()-11));
                     arraylist.add(map);
                 }
 
@@ -132,9 +134,9 @@ public class MainActivity extends Activity {
 
         // onPostExecute displays the results of the AsyncTask.
 
-        protected void onPostExecute(Void args) {
-            // Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
-            //etResponse.setText(result);
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             // Locate the listview in listview_main.xml
             listview = (ListView) findViewById(R.id.listview);
             // Pass the results into ListViewAdapter.java
@@ -144,5 +146,6 @@ public class MainActivity extends Activity {
             // Close the progressdialog
             mProgressDialog.dismiss();
         }
+
     }
 }
